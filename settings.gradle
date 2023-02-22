@@ -1,4 +1,5 @@
 rootProject.name = 'WebHelloApp'
 
 include "WebHelloService"
+include "WebHelloGui"
 

@@ -1,0 +1,33 @@
+plugins {
+    id 'com.github.node-gradle.node'
+}
+
+node {
+    version = '18.14.2'
+    npmVersion = '9.5.0'
+}
+
+task cleanAngular(type: Delete) {
+    delete './dist'
+}
+
+task npmInstallTask(type: NpmTask) {
+    workingDir = file('./')
+    args = ['install']
+}
+
+task buildAngular(type: NodeTask) {
+    dependsOn npmInstallTask, cleanAngular
+   
+    workingDir = file('./')
+   
+    args = ['run', 'build']
+}
+
+task serveAngular(type: NodeTask) {
+    dependsOn npmInstallTask
+   
+    workingDir = file('./')
+   
+    args = ['run', 'start']
+}
