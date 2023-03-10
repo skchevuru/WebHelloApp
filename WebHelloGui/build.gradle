@@ -1,33 +1,34 @@
 plugins {
-    id 'com.github.node-gradle.node'
+  id 'com.github.node-gradle.node'
 }
 
 node {
-    version = '18.14.2'
-    npmVersion = '9.5.0'
+  version = '18.14.2'
+  npmVersion = '9.5.0'
 }
 
 task cleanAngular(type: Delete) {
-    delete './dist'
+  delete './dist'
 }
 
 task npmInstallTask(type: NpmTask) {
-    workingDir = file('./')
-    args = ['install']
+  workingDir = file('./')
+  args = ['install']
 }
 
 task buildAngular(type: NodeTask) {
-    dependsOn npmInstallTask, cleanAngular
-   
-    workingDir = file('./')
-   
-    args = ['run', 'build']
+  dependsOn npmInstallTask, cleanAngular
+  workingDir = file('./')
+
+  script = file('node_modules/@angular/cli/bin/ng.js')
+  args = ['build']
 }
 
 task serveAngular(type: NodeTask) {
-    dependsOn npmInstallTask
-   
-    workingDir = file('./')
-   
-    args = ['run', 'start']
+  dependsOn npmInstallTask
+
+  workingDir = file('./WebHelloGui/dist/web-hello-gui')
+
+  script = file('node_modules/@angular/cli/bin/ng.js')
+  args = ['serve']
 }
